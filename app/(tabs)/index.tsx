@@ -1,0 +1,141 @@
+import { ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { LineChart } from 'react-native-chart-kit';
+import { Surface, Text, Card, useTheme, MD3Colors, List } from 'react-native-paper';
+import Body from "react-native-body-highlighter";
+
+const screenWidth = Dimensions.get("window").width;
+
+const HomePage = () => {
+  const theme = useTheme();
+
+  const progressData = {
+    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+    datasets: [
+      {
+        data: [65, 70, 68, 72, 75, 70, 70],
+        color: () => MD3Colors.primary60,
+        strokeWidth: 2,
+      },
+      {
+        data: [30, 45, 35, 50, 40, 30, 30],
+        color: () => MD3Colors.error60,
+        strokeWidth: 2,
+      },
+      {
+        data: [90, 85, 88, 82, 85, 80, 80],
+        color: () => MD3Colors.tertiary60,
+        strokeWidth: 2,
+      },
+    ],
+  };
+
+  return (
+    <ScrollView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      contentContainerStyle={styles.contentContainer}
+    >
+      <Card mode="elevated" style={styles.card}>
+        <Card.Title
+          title="Progresso Semanal"
+          titleVariant="titleLarge"
+        />
+        <Card.Content>
+          {/* <Surface mode="elevated" style={styles.chartSurface}>
+            <LineChart
+              data={progressData}
+              width={screenWidth - 64}
+              height={220}
+              chartConfig={{
+                backgroundColor: 'transparent',
+                backgroundGradientFrom: theme.colors.elevation.level2,
+                backgroundGradientTo: theme.colors.elevation.level2,
+                decimalPlaces: 0,
+                color: (opacity = 1) => theme.colors.onSurface + opacity * 100,
+                labelColor: () => theme.colors.onSurface,
+                style: {
+                  borderRadius: 16,
+                },
+                propsForLabels: {
+                  fontSize: 12,
+                },
+              }}
+              style={styles.chart}
+            />
+          </Surface> */}
+          <List.Section>
+            <List.Item
+              title="Carga"
+              left={props => <List.Icon {...props} icon="weight-lifter" color={MD3Colors.primary60} />}
+            />
+            <List.Item
+              title="Fadiga"
+              left={props => <List.Icon {...props} icon="lightning-bolt" color={MD3Colors.error60} />}
+            />
+            <List.Item
+              title="Recuperação"
+              left={props => <List.Icon {...props} icon="heart-pulse" color={MD3Colors.tertiary60} />}
+            />
+          </List.Section>
+        </Card.Content>
+      </Card>
+
+      <Card mode="elevated" style={styles.card}>
+        <Card.Title
+          title="Músculos Mais Treinados"
+          titleVariant="titleLarge"
+        />
+        <Card.Content>
+          <Surface mode="elevated" style={styles.bodySurface}>
+            <Body
+              data={[
+                { slug: "chest", intensity: 1 },
+                { slug: "biceps", intensity: 2 },
+              ]}
+              side="front"
+              border={theme.colors.outline}
+            />
+          </Surface>
+        </Card.Content>
+      </Card>
+
+      <Card mode="elevated" style={styles.card}>
+        <Card.Title
+          title="Agenda de Treinos"
+          titleVariant="titleLarge"
+        />
+        <Card.Content>
+          <Text variant="bodyLarge">Nenhum treino agendado para hoje</Text>
+        </Card.Content>
+      </Card>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    padding: 16,
+  },
+  card: {
+    marginBottom: 16,
+    backgroundColor: 'transparent',
+  },
+  chartSurface: {
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+  },
+  chart: {
+    borderRadius: 16,
+    marginVertical: 8,
+  },
+  bodySurface: {
+    padding: 16,
+    alignItems: 'center',
+    borderRadius: 16,
+  },
+});
+
+export default HomePage;

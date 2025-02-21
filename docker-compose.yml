@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    container_name: app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "8081:8081"
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+      - "19006:19006"
+    environment:
+      - REACT_NATIVE_PACKAGER_HOSTNAME=${REACT_NATIVE_PACKAGER_HOSTNAME:-"127.0.0.1"}
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
