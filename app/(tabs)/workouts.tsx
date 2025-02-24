@@ -107,7 +107,7 @@ const WorkoutsPage = () => {
         </ScrollView>
 
         {filteredWorkouts.map((workout) => (
-          <Card key={workout.id} style={styles.workoutCard} mode="elevated">
+          <Card key={workout.id} style={styles.workoutCard}>
             <Card.Title
               title={workout.name}
               subtitle={`${workout.duration} mins • ${workout.difficulty}`}
@@ -124,37 +124,10 @@ const WorkoutsPage = () => {
               <Text variant="bodySmall" style={styles.lastPerformed}>
                 Last performed: {workout.lastPerformed}
               </Text>
-              <Divider style={styles.divider} />
-              <List.Item
-                title="Exercises"
-                description={`${workout.exercises} exercises`}
-                left={props => <List.Icon {...props} icon="dumbbell" />}
-              />
-              <Text variant="bodyMedium" style={styles.musclesTitle}>Target Muscles:</Text>
-              <View style={styles.muscleChips}>
-                {workout.targetMuscles.map(muscle => (
-                  <Chip
-                    key={muscle}
-                    style={styles.muscleChip}
-                    compact
-                  >
-                    {muscle}
-                  </Chip>
-                ))}
-              </View>
             </Card.Content>
           </Card>
         ))}
       </ScrollView>
-
-      // <Portal>
-      //   <FAB
-      //     icon="plus"
-      //     style={[styles.fab, { backgroundColor: theme.colors.primary }]}
-      //     onPress={() => {}}
-      //     label="Create Workout"
-      //   />
-      // </Portal>
   );
 };
 
@@ -188,6 +161,7 @@ const styles = StyleSheet.create({
   },
   lastPerformed: {
     marginBottom: 8,
+    paddingBottom: 8,
   },
   divider: {
     marginVertical: 8,

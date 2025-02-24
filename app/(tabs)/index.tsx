@@ -74,24 +74,21 @@ const HomePage = () => {
           </List.Section>
         </Card.Content>
       </Card>
-
-      <Card mode="elevated">
+      <Card style={baseStyles.card}>
         <Card.Title title="Músculos Mais Treinados" titleVariant="titleLarge" />
-        <Card.Content>
-          <Surface mode="elevated" style={styles.bodySurface}>
-            <Body
-              data={[
-                { slug: "chest", intensity: 1 },
-                { slug: "biceps", intensity: 2 },
-              ]}
-              side="front"
-              border={theme.colors.outline}
-            />
-          </Surface>
+        <Card.Content style={styles.center}>
+          <Body
+            data={[
+              { slug: "chest", intensity: 1 },
+              { slug: "biceps", intensity: 2 },
+            ]}
+            side="front"
+            border={theme.colors.outline}
+          />
         </Card.Content>
       </Card>
 
-      <Card mode="elevated">
+      <Card style={baseStyles.card}>
         <Card.Title title="Agenda de Treinos" titleVariant="titleLarge" />
         <Card.Content>
           <Text variant="bodyLarge">Nenhum treino agendado para hoje</Text>
@@ -121,10 +118,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginVertical: 8,
   },
-  bodySurface: {
-    padding: 16,
+  center: {
     alignItems: 'center',
-    borderRadius: 16,
   },
 });
 
