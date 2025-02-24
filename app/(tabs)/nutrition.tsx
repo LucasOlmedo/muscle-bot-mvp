@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { 
+import {
   Surface,
-  Card, 
-  Text, 
-  useTheme, 
-  ProgressBar, 
+  Card,
+  Text,
+  useTheme,
+  ProgressBar,
   FAB,
   Portal,
   Searchbar,
@@ -16,6 +16,7 @@ import {
 } from 'react-native-paper';
 import { PieChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import { baseStyles } from '@/theme/baseStyle';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -74,35 +75,35 @@ const NutritionPage = () => {
   ];
 
   return (
-    // <Surface >
-      <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <SegmentedButtons
-          value={selectedDay}
-          onValueChange={setSelectedDay}
-          buttons={[
-            { value: 'yesterday', label: 'Yesterday' },
-            { value: 'today', label: 'Today' },
-            { value: 'tomorrow', label: 'Tomorrow' },
-          ]}
-          style={styles.segmentedButtons}
-        />
+    <ScrollView style={[baseStyles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={baseStyles.pageHeader}>Nutrição</Text>
+      <SegmentedButtons
+        value={selectedDay}
+        onValueChange={setSelectedDay}
+        buttons={[
+          { value: 'yesterday', label: 'Yesterday' },
+          { value: 'today', label: 'Today' },
+          { value: 'tomorrow', label: 'Tomorrow' },
+        ]}
+        style={styles.segmentedButtons}
+      />
 
-        <Card style={styles.summaryCard}>
-          <Card.Content>
-            <Text variant="titleLarge">Daily Summary</Text>
-            <View style={styles.caloriesSummary}>
-              <Text variant="displaySmall">
-                {nutritionData.calories.current} / {nutritionData.calories.goal}
-              </Text>
-              <Text variant="bodyMedium">calories remaining</Text>
-            </View>
-            <ProgressBar 
-              progress={nutritionData.calories.current / nutritionData.calories.goal} 
-              style={styles.progressBar} 
-            />
-            
-            <View style={styles.macroContainer}>
-              {/* <PieChart
+      <Card style={styles.summaryCard}>
+        <Card.Content>
+          <Text variant="titleLarge">Daily Summary</Text>
+          <View style={styles.caloriesSummary}>
+            <Text variant="displaySmall">
+              {nutritionData.calories.current} / {nutritionData.calories.goal}
+            </Text>
+            <Text variant="bodyMedium">calories remaining</Text>
+          </View>
+          <ProgressBar
+            progress={nutritionData.calories.current / nutritionData.calories.goal}
+            style={styles.progressBar}
+          />
+
+          <View style={styles.macroContainer}>
+            {/* <PieChart
                 data={pieChartData}
                 width={screenWidth - 64}
                 height={200}
@@ -113,11 +114,11 @@ const NutritionPage = () => {
                 backgroundColor="transparent"
                 paddingLeft="0"
               /> */}
-            </View>
+          </View>
 
-            <Divider style={styles.divider} />
+          <Divider style={styles.divider} />
 
-            {/* <View style={styles.macroDetails}>
+          {/* <View style={styles.macroDetails}>
               {Object.entries(nutritionData).map(([macro, data]) => (
                 <View key={macro} style={styles.macroItem}>
                   <Text variant="titleMedium" style={{ textTransform: 'capitalize' }}>{macro}</Text>
@@ -129,51 +130,41 @@ const NutritionPage = () => {
                 </View>
               ))}
             </View> */}
+        </Card.Content>
+      </Card>
+
+      <Searchbar
+        placeholder="Search foods"
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+        style={styles.searchbar}
+        mode="bar"
+      />
+
+      {meals.map((meal, index) => (
+        <Card key={index} style={styles.mealCard}>
+          <Card.Title
+            title={meal.name}
+            subtitle={`${meal.time} • ${meal.totalCalories} cal`}
+            right={(props) => (
+              <IconButton {...props} icon="plus" onPress={() => { }} />
+            )}
+          />
+          <Card.Content>
+            <List.Section>
+              {meal.foods.map((food, foodIndex) => (
+                <List.Item
+                  key={foodIndex}
+                  title={food.item}
+                  description={`${food.calories} cal • P: ${food.protein}g • C: ${food.carbs}g • F: ${food.fats}g`}
+                  left={props => <List.Icon {...props} icon="food" />}
+                />
+              ))}
+            </List.Section>
           </Card.Content>
         </Card>
-
-        <Searchbar
-          placeholder="Search foods"
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-          style={styles.searchbar}
-          mode="bar"
-        />
-
-        {meals.map((meal, index) => (
-          <Card key={index} style={styles.mealCard}>
-            <Card.Title
-              title={meal.name}
-              subtitle={`${meal.time} • ${meal.totalCalories} cal`}
-              right={(props) => (
-                <IconButton {...props} icon="plus" onPress={() => {}} />
-              )}
-            />
-            <Card.Content>
-              <List.Section>
-                {meal.foods.map((food, foodIndex) => (
-                  <List.Item
-                    key={foodIndex}
-                    title={food.item}
-                    description={`${food.calories} cal • P: ${food.protein}g • C: ${food.carbs}g • F: ${food.fats}g`}
-                    left={props => <List.Icon {...props} icon="food" />}
-                  />
-                ))}
-              </List.Section>
-            </Card.Content>
-          </Card>
-        ))}
-      </ScrollView>
-
-      /* <Portal>
-        <FAB
-          icon="plus"
-          label="Add Food"
-          style={[styles.fab, { backgroundColor: theme.colors.primary }]}
-          onPress={() => {}}
-        />
-      </Portal>
-    </Surface> */
+      ))}
+    </ScrollView>
   );
 };
 

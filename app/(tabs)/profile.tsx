@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { 
-  Avatar, 
-  Card, 
-  Text, 
-  List, 
-  Button, 
+import {
+  Avatar,
+  Card,
+  Text,
+  List,
+  Button,
   useTheme,
   Divider,
   IconButton,
@@ -13,6 +13,7 @@ import {
   ProgressBar,
   Chip
 } from 'react-native-paper';
+import { baseStyles, themeColors, typography, spacing } from '@/theme/baseStyle';
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -43,15 +44,17 @@ const ProfilePage = () => {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Card style={styles.headerCard}>
-        <Card.Content style={styles.header}>
+    <ScrollView style={[
+      baseStyles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={baseStyles.pageHeader}>Perfil & Metas</Text>
+      <Card style={baseStyles.card}>
+        <Card.Content style={baseStyles.contentContainer}>
           <Avatar.Image size={120} source={{ uri: userData.avatar }} />
           <View style={styles.userInfo}>
             <Text variant="headlineMedium">{userData.name}</Text>
             <Text variant="bodyLarge">{userData.email}</Text>
-            <Button 
-              mode="contained-tonal" 
+            <Button
+              mode="contained-tonal"
               style={styles.editButton}
               icon="account-edit"
             >
@@ -62,10 +65,10 @@ const ProfilePage = () => {
       </Card>
 
       <Card style={styles.card}>
-        <Card.Title 
-          title="Body Metrics" 
+        <Card.Title
+          title="Body Metrics"
           right={(props) => (
-            <IconButton {...props} icon="chart-line" onPress={() => {}} />
+            <IconButton {...props} icon="chart-line" onPress={() => { }} />
           )}
         />
         <Card.Content>
@@ -108,10 +111,10 @@ const ProfilePage = () => {
       </Card>
 
       <Card style={styles.card}>
-        <Card.Title 
-          title="Goals" 
+        <Card.Title
+          title="Goals"
           right={(props) => (
-            <IconButton {...props} icon="plus" onPress={() => {}} />
+            <IconButton {...props} icon="plus" onPress={() => { }} />
           )}
         />
         <Card.Content>
@@ -121,9 +124,9 @@ const ProfilePage = () => {
                 <Text variant="bodyLarge">{goal.title}</Text>
                 <Chip compact>{goal.category}</Chip>
               </View>
-              <ProgressBar 
-                progress={goal.progress} 
-                style={styles.goalProgress} 
+              <ProgressBar
+                progress={goal.progress}
+                style={styles.goalProgress}
               />
             </View>
           ))}
@@ -139,7 +142,7 @@ const ProfilePage = () => {
               <Chip key={index} style={styles.chip}>{muscle}</Chip>
             ))}
           </View>
-          
+
           <Text variant="titleMedium" style={styles.sectionTitle}>Training Days</Text>
           <View style={styles.chipGroup}>
             {userData.preferences.trainingDays.map((day, index) => (
@@ -156,9 +159,6 @@ const ProfilePage = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   headerCard: {
     margin: 16,
     marginTop: 16,

@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Surface, Text, Card, useTheme, MD3Colors, List } from 'react-native-paper';
 import Body from "react-native-body-highlighter";
+import { baseStyles } from '@/theme/baseStyle';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -30,15 +31,10 @@ const HomePage = () => {
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <Card mode="elevated" style={styles.card}>
-        <Card.Title
-          title="Progresso Semanal"
-          titleVariant="titleLarge"
-        />
+    <ScrollView style={[baseStyles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={baseStyles.pageHeader}>Dashboard</Text>
+      <Card style={baseStyles.card}>
+        <Card.Title title="Progresso Semanal" titleVariant="titleLarge" />
         <Card.Content>
           {/* <Surface mode="elevated" style={styles.chartSurface}>
             <LineChart
@@ -79,11 +75,8 @@ const HomePage = () => {
         </Card.Content>
       </Card>
 
-      <Card mode="elevated" style={styles.card}>
-        <Card.Title
-          title="Músculos Mais Treinados"
-          titleVariant="titleLarge"
-        />
+      <Card mode="elevated">
+        <Card.Title title="Músculos Mais Treinados" titleVariant="titleLarge" />
         <Card.Content>
           <Surface mode="elevated" style={styles.bodySurface}>
             <Body
@@ -98,11 +91,8 @@ const HomePage = () => {
         </Card.Content>
       </Card>
 
-      <Card mode="elevated" style={styles.card}>
-        <Card.Title
-          title="Agenda de Treinos"
-          titleVariant="titleLarge"
-        />
+      <Card mode="elevated">
+        <Card.Title title="Agenda de Treinos" titleVariant="titleLarge" />
         <Card.Content>
           <Text variant="bodyLarge">Nenhum treino agendado para hoje</Text>
         </Card.Content>

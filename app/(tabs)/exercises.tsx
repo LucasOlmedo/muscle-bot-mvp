@@ -1,5 +1,8 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { useState } from 'react';
+import { Card, Chip, Divider, List, Searchbar, Text, useTheme } from 'react-native-paper';
+import { baseStyles } from '@/theme/baseStyle';
+import { Image } from 'react-native';
 
 const exercises = [
   { id: 1, name: 'Push-ups', category: 'Upper Body' },
@@ -10,39 +13,68 @@ const exercises = [
 ];
 
 const ExercisesPage = () => {
+  const theme = useTheme();
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-
   const filteredExercises = selectedCategory === 'All'
     ? exercises
     : exercises.filter(exercise => exercise.category === selectedCategory);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Exercises</Text>
-      <View style={styles.categoryFilter}>
-        {['All', 'Upper Body', 'Lower Body', 'Core'].map(category => (
-          <Text
-            key={category}
-            style={[
-              styles.categoryButton,
-              selectedCategory === category && styles.selectedCategory
-            ]}
-            onPress={() => setSelectedCategory(category)}
+    <ScrollView style={[baseStyles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={baseStyles.pageHeader}>Exercícios</Text>
+      <Searchbar
+        placeholder="Search workouts"
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+        style={styles.searchbar}
+        mode="bar"
+      />
+      <View style={styles.container}>
+        <View style={styles.categoryFilter}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={baseStyles.chipGroup}
           >
-            {category}
-          </Text>
-        ))}
-      </View>
+            {['All', 'Upper Body', 'Lower Body', 'Core'].map(category => (
+              <Chip
+                key={category}
+                selected={selectedCategory === category}
+                onPress={() => setSelectedCategory(category)}
+                style={baseStyles.chip}
+                showSelectedOverlay
+              >
+                {category}
+              </Chip>
+            ))}
+          </ScrollView>
+        </View>
 
-      <ScrollView style={styles.exerciseList}>
-        {filteredExercises.map(exercise => (
-          <View key={exercise.id} style={styles.exerciseCard}>
-            <Text style={styles.exerciseName}>{exercise.name}</Text>
-            <Text style={styles.exerciseCategory}>{exercise.category}</Text>
-          </View>
-        ))}
-      </ScrollView>
-    </View>
+        <ScrollView style={styles.exerciseList}>
+          <Card style={styles.exerciseList}>
+            <Card.Content>
+              {filteredExercises.map(exercise => (
+                <List.Item
+                  key={exercise.id}
+                  title={exercise.name}
+                  description={exercise.category}
+                  onPress={() => { }}
+                  left={() => (
+                    <Image
+                      source={{ uri: "https://gymvisual.com/img/p/5/9/3/5/5935.gif" }}
+                      style={styles.exerciseImage}
+                    />
+                  )}
+                  titleStyle={styles.exerciseName}
+                  descriptionStyle={styles.exerciseCategory}
+                />
+              ))}
+            </Card.Content>
+          </Card>
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -50,7 +82,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
@@ -65,34 +96,31 @@ const styles = StyleSheet.create({
   categoryButton: {
     padding: 8,
     borderRadius: 8,
-    backgroundColor: '#e0e0e0',
   },
   selectedCategory: {
-    backgroundColor: '#007AFF',
     color: 'white',
   },
   exerciseList: {
     flex: 1,
   },
-  exerciseCard: {
-    backgroundColor: 'white',
-    padding: 16,
+  searchbar: {
+    marginTop: 16,
+    marginHorizontal: 16,
+  },
+  exerciseImage: {
+    width: 60,
+    height: 60,
     borderRadius: 8,
-    marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    marginRight: 8,
   },
   exerciseName: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '600',
   },
   exerciseCategory: {
     fontSize: 14,
-    color: '#666',
     marginTop: 4,
+    opacity: 0.5,
   },
 });
 

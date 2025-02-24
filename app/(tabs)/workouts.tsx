@@ -1,3 +1,4 @@
+import { baseStyles } from '@/theme/baseStyle';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import {
@@ -15,7 +16,7 @@ import {
   Divider
 } from 'react-native-paper';
 
-const WorkoutsScreen = () => {
+const WorkoutsPage = () => {
   const theme = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
@@ -62,7 +63,8 @@ const WorkoutsScreen = () => {
   );
 
   return (
-      <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <ScrollView style={[baseStyles.container, { backgroundColor: theme.colors.background }]}>
+        <Text style={baseStyles.pageHeader}>Meus Treinos</Text>
         <View style={styles.statsContainer}>
           <Card style={styles.statsCard}>
             <Card.Content>
@@ -82,7 +84,7 @@ const WorkoutsScreen = () => {
           placeholder="Search workouts"
           onChangeText={setSearchQuery}
           value={searchQuery}
-          style={styles.searchbar}
+          style={baseStyles.searchbar}
           mode="bar"
         />
 
@@ -168,10 +170,6 @@ const styles = StyleSheet.create({
   statsCard: {
     flex: 1,
   },
-  searchbar: {
-    marginHorizontal: 16,
-    marginBottom: 16,
-  },
   filtersContainer: {
     paddingHorizontal: 16,
     marginBottom: 16,
@@ -214,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WorkoutsScreen;
+export default WorkoutsPage;
