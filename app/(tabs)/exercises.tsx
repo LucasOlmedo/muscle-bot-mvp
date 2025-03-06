@@ -1,57 +1,11 @@
-import { View, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { useState, useMemo } from 'react';
-import { Card, Chip, List, Searchbar, Text, useTheme } from 'react-native-paper';
+import { Card, Searchbar, Text, useTheme } from 'react-native-paper';
 import { baseStyles } from '@/theme/baseStyle';
 import { Exercise } from '@/types/exercise';
+import FilterChips from '@/components/exercises/FilterChips';
+import ExerciseItem from '@/components/exercises/ExerciseItem';
 
-const FilterChips = ({
-  items,
-  selectedItems,
-  onSelect,
-  type
-}: {
-  items: string[],
-  selectedItems: string[],
-  onSelect: (item: string, type: 'category' | 'equipment') => void,
-  type: 'category' | 'equipment'
-}) => (
-  <View style={styles.categoryFilter}>
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}
-      style={baseStyles.chipGroup}
-    >
-      {items.map(item => (
-        <Chip
-          key={item}
-          selected={selectedItems.includes(item)}
-          onPress={() => onSelect(item, type)}
-          style={baseStyles.chip}
-          showSelectedOverlay
-        >
-          {item}
-        </Chip>
-      ))}
-    </ScrollView>
-  </View>
-);
-
-const ExerciseItem = ({ exercise }: { exercise: Exercise }) => (
-  <List.Item
-    key={exercise.id}
-    title={exercise.name}
-    description={exercise.bodyPart}
-    onPress={() => { }}
-    left={() => (
-      <Image
-        source={{ uri: exercise.gifUrl }}
-        style={styles.exerciseImage}
-        resizeMode="cover"
-        fadeDuration={0}
-      />
-    )}
-    titleStyle={styles.exerciseName}
-    descriptionStyle={styles.exerciseCategory}
-  />
-);
 const exercises: Exercise[] = [
   {
     bodyPart: "waist",
@@ -253,11 +207,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
   },
-  categoryFilter: {
-    flexDirection: 'row',
-    marginBottom: 16,
-    gap: 8,
-  },
   categoryButton: {
     padding: 8,
     borderRadius: 8,
@@ -271,21 +220,6 @@ const styles = StyleSheet.create({
   searchbar: {
     marginTop: 16,
     marginHorizontal: 16,
-  },
-  exerciseImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 8,
-    marginRight: 8,
-  },
-  exerciseName: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  exerciseCategory: {
-    fontSize: 14,
-    marginTop: 4,
-    opacity: 0.5,
   },
 });
 
