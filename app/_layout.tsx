@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { MD3DarkTheme, PaperProvider } from 'react-native-paper';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const theme = {
   ...MD3DarkTheme,
@@ -73,15 +73,35 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <PaperProvider theme={theme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
-        </PaperProvider>
-      </SafeAreaView>
+      <PaperProvider theme={theme}>
+        <Stack
+          screenOptions={{
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: theme.colors.background,
+            },
+            headerTintColor: theme.colors.onBackground,
+            headerTitleStyle: {
+              color: theme.colors.onBackground,
+            },
+            contentStyle: {
+              backgroundColor: theme.colors.background,
+            },
+          }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="exercises/[id]"
+            options={{
+              title: 'Detalhes do Exercício',
+              presentation: 'transparentModal',
+              animation: 'none',
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="dark" />
+      </PaperProvider>
     </SafeAreaProvider>
   );
 }

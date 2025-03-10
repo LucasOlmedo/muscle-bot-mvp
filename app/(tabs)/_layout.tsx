@@ -1,4 +1,5 @@
 import { BottomNavigation, useTheme } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import HomePage from '.';
 import ProfilePage from './profile';
 import ExercisesPage from './exercises';
@@ -7,7 +8,6 @@ import NutritionPage from './nutrition';
 import { useState } from 'react';
 
 export default function TabLayout() {
-
   const theme = useTheme();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -27,12 +27,16 @@ export default function TabLayout() {
   });
 
   return (
-    <BottomNavigation
-      theme={theme}
-      labeled={false}
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-    />
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: theme.colors.background }}
+      edges={['top']}>
+      <BottomNavigation
+        theme={theme}
+        labeled={false}
+        navigationState={{ index, routes }}
+        onIndexChange={setIndex}
+        renderScene={renderScene}
+      />
+    </SafeAreaView>
   );
 }

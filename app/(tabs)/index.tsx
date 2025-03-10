@@ -1,6 +1,6 @@
-import { ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { ScrollView, StyleSheet, Dimensions, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { Surface, Text, Card, useTheme, MD3Colors, List } from 'react-native-paper';
+import { Text, Card, useTheme, MD3Colors, List } from 'react-native-paper';
 import Body from "react-native-body-highlighter";
 import { baseStyles } from '@/theme/baseStyle';
 
@@ -36,28 +36,26 @@ const HomePage = () => {
       <Card style={baseStyles.card}>
         <Card.Title title="Progresso Semanal" titleVariant="titleLarge" />
         <Card.Content>
-          {/* <Surface mode="elevated" style={styles.chartSurface}>
-            <LineChart
-              data={progressData}
-              width={screenWidth - 64}
-              height={220}
-              chartConfig={{
-                backgroundColor: 'transparent',
-                backgroundGradientFrom: theme.colors.elevation.level2,
-                backgroundGradientTo: theme.colors.elevation.level2,
-                decimalPlaces: 0,
-                color: (opacity = 1) => theme.colors.onSurface + opacity * 100,
-                labelColor: () => theme.colors.onSurface,
-                style: {
-                  borderRadius: 16,
-                },
-                propsForLabels: {
-                  fontSize: 12,
-                },
-              }}
-              style={styles.chart}
-            />
-          </Surface> */}
+          <LineChart
+            data={progressData}
+            width={screenWidth - 64}
+            height={220}
+            chartConfig={{
+              backgroundColor: 'transparent',
+              backgroundGradientFrom: theme.colors.elevation.level2,
+              backgroundGradientTo: theme.colors.elevation.level2,
+              decimalPlaces: 0,
+              color: (opacity = 1) => theme.colors.onSurface + opacity * 100,
+              labelColor: () => theme.colors.onSurface,
+              style: {
+                borderRadius: 16,
+              },
+              propsForLabels: {
+                fontSize: 12,
+              },
+            }}
+            style={styles.chart}
+          />
           <List.Section>
             <List.Item
               title="Carga"
@@ -77,14 +75,27 @@ const HomePage = () => {
       <Card style={baseStyles.card}>
         <Card.Title title="Músculos Mais Treinados" titleVariant="titleLarge" />
         <Card.Content style={styles.center}>
-          <Body
-            data={[
-              { slug: "chest", intensity: 1 },
-              { slug: "biceps", intensity: 2 },
-            ]}
-            side="front"
-            border={theme.colors.outline}
-          />
+          <View style={styles.bodyContainer}>
+            <Body
+              data={[
+                { slug: "chest", intensity: 1 },
+                { slug: "biceps", intensity: 2 },
+                { slug: "quadriceps", intensity: 1 },
+                { slug: "deltoids", intensity: 2 },
+              ]}
+              side="front"
+              border={theme.colors.outline}
+            />
+            <Body
+              data={[
+                { slug: "upper-back", intensity: 2 },
+                { slug: "hamstring", intensity: 1 },
+                { slug: "triceps", intensity: 1 },
+              ]}
+              side="back"
+              border={theme.colors.outline}
+            />
+          </View>
         </Card.Content>
       </Card>
 
@@ -120,6 +131,12 @@ const styles = StyleSheet.create({
   },
   center: {
     alignItems: 'center',
+  },
+  bodyContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
   },
 });
 

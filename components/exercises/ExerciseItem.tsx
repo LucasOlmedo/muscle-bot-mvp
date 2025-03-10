@@ -1,4 +1,5 @@
 import { Exercise } from "@/types/exercise";
+import { router } from "expo-router";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native";
 import { List } from "react-native-paper";
@@ -8,7 +9,7 @@ const ExerciseItem = ({ exercise }: { exercise: Exercise }) => (
     key={exercise.id}
     title={exercise.name}
     description={exercise.bodyPart}
-    onPress={() => { }}
+    onPress={() => router.push(`/exercises/${exercise.id}`)}
     left={() => (
       <Image
         source={{ uri: exercise.gifUrl }}
