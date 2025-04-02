@@ -1,6 +1,6 @@
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { useState, useMemo } from 'react';
-import { Card, Searchbar, Text, useTheme } from 'react-native-paper';
+import { Card, Searchbar, Text, useTheme, IconButton } from 'react-native-paper';
 import { baseStyles } from '@/theme/baseStyle';
 import FilterChips from '@/components/exercises/FilterChips';
 import ExerciseItem from '@/components/exercises/ExerciseItem';
@@ -11,6 +11,7 @@ const ExercisesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['All']);
   const [selectedEquipments, setSelectedEquipments] = useState<string[]>(['All']);
+  const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
   const categories = useMemo((): string[] =>
     ['All', ...new Set<string>(exercises.map(exercise => exercise.bodyPart))],
@@ -57,6 +58,16 @@ const ExercisesPage = () => {
     ));
   }, [selectedCategories, selectedEquipments, searchQuery]);
 
+  const hasActiveFilters = () => {
+    return !selectedCategories.includes('All') || !selectedEquipments.includes('All');
+  };
+
+  const getFilterIcon = () => {
+    if (isFiltersVisible) return 'filter-remove';
+    if (hasActiveFilters()) return 'filter-check';
+    return 'filter';
+  };
+
   return (
     <ScrollView style={[baseStyles.container,
     { backgroundColor: theme.colors.background }]}
@@ -69,22 +80,33 @@ const ExercisesPage = () => {
         value={searchQuery}
         style={styles.searchbar}
         mode="bar"
+        right={() => (
+          <IconButton
+            mode='contained-tonal'
+            icon={getFilterIcon()}
+            onPress={() => setIsFiltersVisible(!isFiltersVisible)}
+          />
+        )}
       />
 
       <View style={styles.container}>
-        <FilterChips
-          items={equipments}
-          selectedItems={selectedEquipments}
-          onSelect={handleFilter}
-          type="equipment"
-        />
+        {isFiltersVisible && (
+          <View style={styles.filtersContainer}>
+            <FilterChips
+              items={equipments}
+              selectedItems={selectedEquipments}
+              onSelect={handleFilter}
+              type="equipment"
+            />
 
-        <FilterChips
-          items={categories}
-          selectedItems={selectedCategories}
-          onSelect={handleFilter}
-          type="category"
-        />
+            <FilterChips
+              items={categories}
+              selectedItems={selectedCategories}
+              onSelect={handleFilter}
+              type="category"
+            />
+          </View>
+        )}
 
         <ScrollView style={styles.exerciseList}>
           {filteredExercises.length > 0 && (
@@ -126,6 +148,14 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginHorizontal: 16,
   },
+  filtersContainer: {
+    marginBottom: 16,
+  },
+  filterIconButton: {
+    flexDirection: 'row',
+    marginTop: 16,
+    paddingHorizontal: 8,
+  }
 });
 
 export default ExercisesPage;
