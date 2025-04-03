@@ -2,13 +2,21 @@ import { Exercise } from "@/types/exercise";
 import { router } from "expo-router";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native";
-import { List } from "react-native-paper";
+import { Chip, List } from "react-native-paper";
 
 const ExerciseItem = ({ exercise }: { exercise: Exercise }) => (
   <List.Item
     key={exercise.id}
     title={exercise.name}
-    description={exercise.bodyPart}
+    description={() => (
+      <Chip
+        mode="flat"
+        compact={true}
+        textStyle={{ fontSize: 12 }}
+        style={{ alignSelf: "flex-start", marginTop: 6, borderRadius: 50 }}>
+        {exercise.bodyPart}
+      </Chip>
+    )}
     onPress={() => router.push(`/exercises/${exercise.id}`)}
     left={() => (
       <Image
