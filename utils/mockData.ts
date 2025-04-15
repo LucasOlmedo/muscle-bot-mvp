@@ -3,7 +3,7 @@ import exercises from '@/constants/ExercisesData';
 export const generateMockList = () => {
   return Array.from({ length: 50 }, (_, index) => ({
     ...exercises[index % exercises.length],
-    id: `${exercises[index % exercises.length].id}-
+    key: `${exercises[index % exercises.length].id}-
       ${Math.floor(index / exercises.length)}-${Math.random()}`,
     name: `${exercises[index % exercises.length].name}`
   }));

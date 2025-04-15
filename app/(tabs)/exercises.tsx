@@ -106,16 +106,27 @@ const ExercisesPage = () => {
     resetList();
   }, [selectedCategories, selectedEquipments, searchQuery, resetList]);
 
+  const handleScroll = ({ nativeEvent }:
+    { nativeEvent: { layoutMeasurement: { height: number }, contentOffset: { y: number }, contentSize: { height: number } } }) => {
+    const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+    const paddingToBottom = 50; // Increase trigger area for mobile
+
+    const isCloseToBottom =
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+
+    if (isCloseToBottom && !loading) {
+      loadMoreExercises();
+    }
+  };
+
   return (
     <ScrollView
       style={[baseStyles.container, { backgroundColor: theme.colors.background }]}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      onScroll={({ nativeEvent }) => {
-        const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-        const isCloseToBottom = layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
-        if (isCloseToBottom && !loading) loadMoreExercises();
-      }}
-      scrollEventThrottle={400}
+      onScroll={handleScroll}
+      scrollEventThrottle={16} // Increase scroll event frequency
+      onMomentumScrollEnd={handleScroll} // Add momentum scroll handling
     >
       <Text style={baseStyles.pageHeader}>Exercícios</Text>
 
@@ -157,7 +168,7 @@ const ExercisesPage = () => {
             <Card style={styles.exerciseList}>
               <Card.Content>
                 {displayedExercises.map(exercise => (
-                  <ExerciseItem key={exercise.id} exercise={exercise} />
+                  <ExerciseItem key={exercise.key} exercise={exercise} />
                 ))}
                 {loading && (
                   <View style={styles.loadingContainer}>
