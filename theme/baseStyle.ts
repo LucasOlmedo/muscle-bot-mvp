@@ -17,6 +17,7 @@ export const baseStyles = StyleSheet.create({
     fontWeight: 'bold',
     paddingTop: 16,
     paddingHorizontal: 16,
+    paddingBottom: 16,
   },
   
   // Cards
