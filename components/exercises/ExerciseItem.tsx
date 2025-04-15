@@ -26,7 +26,8 @@ const ExerciseItem = ({ exercise }: { exercise: Exercise }) => (
         fadeDuration={0}
       />
     )}
-    titleStyle={styles.exerciseName}
+    titleNumberOfLines={0}
+    titleStyle={[styles.exerciseName, styles.titleWrap]}
     descriptionStyle={styles.exerciseCategory}
   />
 );
@@ -46,6 +47,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 4,
     opacity: 0.5,
+  },
+  titleWrap: {
+    flexWrap: 'wrap',
+    flexShrink: 1,
+    paddingRight: 8,
   },
 });
 
