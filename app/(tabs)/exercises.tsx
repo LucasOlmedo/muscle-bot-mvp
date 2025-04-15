@@ -1,6 +1,6 @@
 import { View, ScrollView, StyleSheet, RefreshControl } from 'react-native';
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { Card, Searchbar, Text, useTheme, IconButton, ActivityIndicator } from 'react-native-paper';
+import { Card, Searchbar, Text, useTheme, IconButton, ActivityIndicator, FAB } from 'react-native-paper';
 import { generateMockList, getPaginatedData } from '@/utils/mockData';
 import { baseStyles } from '@/theme/baseStyle';
 import FilterChips from '@/components/exercises/FilterChips';
@@ -121,68 +121,76 @@ const ExercisesPage = () => {
   };
 
   return (
-    <ScrollView
-      style={[baseStyles.container, { backgroundColor: theme.colors.background }]}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      onScroll={handleScroll}
-      scrollEventThrottle={16} // Increase scroll event frequency
-      onMomentumScrollEnd={handleScroll} // Add momentum scroll handling
-    >
-      <Text style={baseStyles.pageHeader}>Exercícios</Text>
+    <View style={{ flex: 1 }}>
+      <ScrollView
+        style={[baseStyles.container, { backgroundColor: theme.colors.background }]}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        onMomentumScrollEnd={handleScroll}
+      >
+        <Text style={baseStyles.pageHeader}>Exercícios</Text>
 
-      <Searchbar
-        placeholder="Search exercises"
-        onChangeText={setSearchQuery}
-        value={searchQuery}
-        style={styles.searchbar}
-        mode="bar"
-        right={() => (
-          <IconButton
-            mode='contained-tonal'
-            icon={getFilterIcon()}
-            onPress={() => setIsFiltersVisible(!isFiltersVisible)}
-          />
-        )}
-      />
-
-      <View style={styles.container}>
-        {isFiltersVisible && (
-          <View style={styles.filtersContainer}>
-            <FilterChips
-              items={equipments}
-              selectedItems={selectedEquipments}
-              onSelect={handleFilter}
-              type="equipment"
+        <Searchbar
+          placeholder="Search exercises"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+          style={styles.searchbar}
+          mode="bar"
+          right={() => (
+            <IconButton
+              mode='contained-tonal'
+              icon={getFilterIcon()}
+              onPress={() => setIsFiltersVisible(!isFiltersVisible)}
             />
-            <FilterChips
-              items={categories}
-              selectedItems={selectedCategories}
-              onSelect={handleFilter}
-              type="category"
-            />
-          </View>
-        )}
-
-        <View style={styles.exerciseList}>
-          {displayedExercises.length > 0 ? (
-            <Card style={styles.exerciseList}>
-              <Card.Content>
-                {displayedExercises.map(exercise => (
-                  <ExerciseItem key={exercise.key} exercise={exercise} />
-                ))}
-                {loading && (
-                  <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="small" />
-                  </View>
-                )}
-              </Card.Content>
-            </Card>
-          ) : (
-            <Text style={styles.noResults}>No exercises found</Text>
           )}
+        />
+
+        <View style={styles.container}>
+          {isFiltersVisible && (
+            <View style={styles.filtersContainer}>
+              <FilterChips
+                items={equipments}
+                selectedItems={selectedEquipments}
+                onSelect={handleFilter}
+                type="equipment"
+              />
+              <FilterChips
+                items={categories}
+                selectedItems={selectedCategories}
+                onSelect={handleFilter}
+                type="category"
+              />
+            </View>
+          )}
+
+          <View style={styles.exerciseList}>
+            {displayedExercises.length > 0 ? (
+              <Card style={styles.exerciseList}>
+                <Card.Content>
+                  {displayedExercises.map(exercise => (
+                    <ExerciseItem key={Math.random()} exercise={exercise} />
+                  ))}
+                  {loading && (
+                    <View style={styles.loadingContainer}>
+                      <ActivityIndicator size="small" />
+                    </View>
+                  )}
+                </Card.Content>
+              </Card>
+            ) : (
+              <Text style={styles.noResults}>No exercises found</Text>
+            )}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+
+      <FAB
+        icon="plus"
+        style={styles.fab}
+        onPress={() => console.log('FAB Pressed')}
+      />
+    </View>
   );
 };
 
@@ -209,6 +217,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 16,
     opacity: 0.7,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });
 
