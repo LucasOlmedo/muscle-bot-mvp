@@ -31,8 +31,8 @@ export const ProgressHistory = ({ exercise }: Props) => {
   return (
     <Card style={baseStyles.card}>
       <Card.Content>
-        <Text variant="titleLarge" style={styles.sectionTitle}>
-          Histórico e Progresso
+        <Text variant="titleMedium" style={styles.sectionTitle}>
+          Histórico e Progressão
         </Text>
 
         <View style={styles.chartSection}>
