@@ -53,6 +53,7 @@ const ExerciseDetail = () => {
 const styles = StyleSheet.create({
   segmentedContainer: {
     paddingHorizontal: 16,
+    marginBottom: 16,
   },
 });
 
