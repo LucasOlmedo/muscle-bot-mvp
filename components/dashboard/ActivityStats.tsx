@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Text, Card, MD3Colors, List, ProgressBar } from 'react-native-paper';
+import { Text, Card, MD3Colors, List, ProgressBar, Divider } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { baseStyles } from '@/theme/baseStyle';
 
@@ -32,7 +32,8 @@ export const ActivityStats = () => {
           </View>
         </View>
 
-        <View style={styles.divider} />
+        {/* <View style={styles.divider} /> */}
+        <Divider style={styles.divider} />
 
         <View style={styles.stepsContainer}>
           <View style={styles.stepsHeader}>
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingHorizontal: 16,
     marginHorizontal: 16,
+    marginTop: 8,
   },
   statsItem: {
     alignItems: 'center',
@@ -76,11 +78,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   divider: {
-    height: 1,
-    backgroundColor: 'rgba(0,0,0,0.1)',
     marginTop: 16,
     marginVertical: 8,
-    marginHorizontal: 8,
   },
   stepsContainer: {
     paddingHorizontal: 16,
