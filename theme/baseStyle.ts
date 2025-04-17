@@ -22,7 +22,8 @@ export const baseStyles = StyleSheet.create({
   
   // Cards
   card: {
-    margin: 16,
+    marginBottom: 16,
+    marginHorizontal: 16,
   },
   cardHeader: {
     marginBottom: 16,
