@@ -2,7 +2,9 @@ import { ScrollView, StyleSheet, Dimensions, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Text, Card, useTheme, MD3Colors, List } from 'react-native-paper';
 import Body from "react-native-body-highlighter";
-import { baseStyles, themeColors } from '@/theme/baseStyle';
+import { baseStyles } from '@/theme/baseStyle';
+import { ActivityStats } from '@/components/dashboard/ActivityStats';
+import { ScheduleWorkout } from '@/components/dashboard/ScheduleWorkout';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -33,29 +35,8 @@ const HomePage = () => {
   return (
     <ScrollView style={[baseStyles.container, { backgroundColor: theme.colors.background }]}>
       <Text style={baseStyles.pageHeader}>Dashboard</Text>
-
-      <Card style={[baseStyles.card, styles.statsCard]}>
-        <Card.Title title="Atividade" titleVariant="titleLarge" />
-        <Card.Content style={styles.statsContainer}>
-          <View style={styles.statsItem}>
-            <List.Icon icon="fire" color={MD3Colors.error50} />
-            <Text variant="titleLarge" style={styles.statsNumber}>7</Text>
-            <Text variant="labelSmall">Dias Seguidos</Text>
-          </View>
-
-          <View style={styles.statsItem}>
-            <List.Icon icon="dumbbell" color={MD3Colors.tertiary50} />
-            <Text variant="titleLarge" style={styles.statsNumber}>12</Text>
-            <Text variant="labelSmall">Treinos</Text>
-          </View>
-
-          <View style={styles.statsItem}>
-            <List.Icon icon="clock-outline" color={MD3Colors.primary50} />
-            <Text variant="titleLarge" style={styles.statsNumber}>8h</Text>
-            <Text variant="labelSmall">Tempo Total</Text>
-          </View>
-        </Card.Content>
-      </Card>
+      
+      <ActivityStats />
 
       <Card style={baseStyles.card}>
         <Card.Title title="Progresso Semanal" titleVariant="titleLarge" />
@@ -123,12 +104,7 @@ const HomePage = () => {
         </Card.Content>
       </Card>
 
-      <Card style={baseStyles.card}>
-        <Card.Title title="Agenda de Treinos" titleVariant="titleLarge" />
-        <Card.Content>
-          <Text variant="bodyLarge">Nenhum treino agendado para hoje</Text>
-        </Card.Content>
-      </Card>
+      <ScheduleWorkout />
     </ScrollView>
   );
 }
