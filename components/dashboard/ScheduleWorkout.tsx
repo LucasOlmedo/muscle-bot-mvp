@@ -27,7 +27,7 @@ export const ScheduleWorkout = () => {
       finished: true,
     },
     {
-      date: moment().add(2, 'days'),
+      date: moment().add(1, 'days'),
       workouts: [
         { name: 'Ombros', duration: '40 min', intensity: 'Moderada' }
       ],
@@ -73,33 +73,49 @@ export const ScheduleWorkout = () => {
   };
 
   return (
-    <Card style={baseStyles.card}>
-      <Card.Title title="Histórico de Treinos" titleVariant="titleLarge" />
-      <Card.Content>
+    <>
+      <View style={styles.sectionHeader}>
+        <Text>Histórico Recente</Text>
+      </View>
+      <Card style={baseStyles.card}>
+        <Card.Content>
 
-        <CalendarStrip
-          scrollable
-          style={styles.calendar}
-          calendarColor={'transparent'}
-          calendarHeaderStyle={{ color: MD3Colors.neutral60 }}
-          dateNumberStyle={{ color: MD3Colors.neutral60 }}
-          dateNameStyle={{ color: MD3Colors.neutral60 }}
-          iconContainer={{ flex: 0.1 }}
-          selectedDate={selectedDate}
-          markedDates={markedDates}
-          highlightDateNumberStyle={{ color: MD3DarkTheme.colors.primary }}
-          highlightDateNameStyle={{ color: MD3DarkTheme.colors.primary }}
-          leftSelector={<Icon source="chevron-left" size={24} color={MD3Colors.neutral60} />}
-          rightSelector={<Icon source="chevron-right" size={24} color={MD3Colors.neutral60} />}
-          onDateSelected={setSelectedDate}
-        />
+          <CalendarStrip
+            scrollable={true}
+            scrollerPaging={true}
+            style={styles.calendar}
+            calendarColor={'transparent'}
+            calendarHeaderFormat={'DD [de] MMMM[,] YYYY'}
+            calendarHeaderStyle={{ color: MD3Colors.neutral60, fontSize: 14 }}
+            dateNumberStyle={{ color: MD3Colors.neutral60, fontSize: 14 }}
+            dateNameStyle={{ color: MD3Colors.neutral60, fontSize: 10 }}
+            iconContainer={{ flex: 0.1 }}
+            selectedDate={selectedDate}
+            startingDate={moment().subtract(3, 'days')}
+            markedDates={markedDates}
+            highlightDateNumberStyle={{ color: MD3DarkTheme.colors.primary, fontSize: 14 }}
+            highlightDateNameStyle={{ color: MD3DarkTheme.colors.primary, fontSize: 10 }}
+            leftSelector={<Icon source="chevron-left" size={24} color={MD3Colors.neutral60} />}
+            rightSelector={<Icon source="chevron-right" size={24} color={MD3Colors.neutral60} />}
+            onDateSelected={setSelectedDate}
+            customDatesStyles={() => ({
+              dateContainerStyle: {},
+              dateNameStyle: {},
+              dateNumberStyle: {},
+              highlightDateNameStyle: {},
+              highlightDateNumberStyle: {},
+              dateHeaderStyle: { color: MD3Colors.neutral60 }
+            })}
+            headerText={selectedDate.format('DD [de] MMMM[,] YYYY')}
+          />
 
-        <View style={styles.detailsContainer}>
-          <Divider bold={true} />
-          {renderWorkoutDetails()}
-        </View>
-      </Card.Content>
-    </Card>
+          <View style={styles.detailsContainer}>
+            <Divider bold={true} style={styles.divider} />
+            {renderWorkoutDetails()}
+          </View>
+        </Card.Content>
+      </Card>
+    </>
   );
 };
 
@@ -124,7 +140,14 @@ const styles = StyleSheet.create({
     padding: 16,
     marginTop: 16,
   },
+  sectionHeader: {
+    padding: 16,
+  },
   emptyText: {
     opacity: 0.6,
+  },
+  divider: {
+    marginTop: 16,
+    marginVertical: 8,
   },
 });

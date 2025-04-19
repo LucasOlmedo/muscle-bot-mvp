@@ -5,6 +5,7 @@ import Body from "react-native-body-highlighter";
 import { baseStyles } from '@/theme/baseStyle';
 import { ActivityStats } from '@/components/dashboard/ActivityStats';
 import { ScheduleWorkout } from '@/components/dashboard/ScheduleWorkout';
+import { MuscleProgressionInfo } from '@/components/dashboard/MuscleProgressionInfo';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -37,73 +38,7 @@ const HomePage = () => {
       <Text style={baseStyles.pageHeader}>Dashboard</Text>
       
       <ActivityStats />
-
-      <Card style={baseStyles.card}>
-        <Card.Title title="Progresso Semanal" titleVariant="titleLarge" />
-        <Card.Content>
-          <LineChart
-            data={progressData}
-            width={screenWidth - 64}
-            height={220}
-            chartConfig={{
-              backgroundColor: 'transparent',
-              backgroundGradientFrom: theme.colors.elevation.level2,
-              backgroundGradientTo: theme.colors.elevation.level2,
-              decimalPlaces: 0,
-              color: (opacity = 1) => theme.colors.onSurface + opacity * 100,
-              labelColor: () => theme.colors.onSurface,
-              style: {
-                borderRadius: 16,
-              },
-              propsForLabels: {
-                fontSize: 12,
-              },
-            }}
-            style={styles.chart}
-          />
-          <List.Section>
-            <List.Item
-              title="Carga"
-              left={props => <List.Icon {...props} icon="weight-lifter" color={MD3Colors.primary60} />}
-            />
-            <List.Item
-              title="Fadiga"
-              left={props => <List.Icon {...props} icon="lightning-bolt" color={MD3Colors.error60} />}
-            />
-            <List.Item
-              title="Recuperação"
-              left={props => <List.Icon {...props} icon="heart-pulse" color={MD3Colors.tertiary60} />}
-            />
-          </List.Section>
-        </Card.Content>
-      </Card>
-      <Card style={baseStyles.card}>
-        <Card.Title title="Músculos Mais Treinados" titleVariant="titleLarge" />
-        <Card.Content style={styles.center}>
-          <View style={styles.bodyContainer}>
-            <Body
-              data={[
-                { slug: "chest", intensity: 1 },
-                { slug: "biceps", intensity: 2 },
-                { slug: "quadriceps", intensity: 1 },
-                { slug: "deltoids", intensity: 2 },
-              ]}
-              side="front"
-              border={theme.colors.outline}
-            />
-            <Body
-              data={[
-                { slug: "upper-back", intensity: 2 },
-                { slug: "hamstring", intensity: 1 },
-                { slug: "triceps", intensity: 1 },
-              ]}
-              side="back"
-              border={theme.colors.outline}
-            />
-          </View>
-        </Card.Content>
-      </Card>
-
+      <MuscleProgressionInfo />
       <ScheduleWorkout />
     </ScrollView>
   );
