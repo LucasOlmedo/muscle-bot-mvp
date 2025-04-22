@@ -1,7 +1,6 @@
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { Card, Text, List, useTheme, MD3Colors, Divider, SegmentedButtons, Tooltip, IconButton } from 'react-native-paper';
+import { Card, Text, useTheme, MD3Colors, SegmentedButtons, Tooltip, IconButton } from 'react-native-paper';
 import { LineChart } from 'react-native-chart-kit';
-import Body from "react-native-body-highlighter";
 import { baseStyles } from '@/theme/baseStyle';
 import { useState } from 'react';
 
@@ -11,7 +10,6 @@ export const MuscleProgressionInfo = () => {
   const theme = useTheme();
   const [timeRange, setTimeRange] = useState('7d');
 
-  // Mock data for different time ranges
   const chartData = {
     '7d': {
       labels: ['10/04', '11/04', '12/04', '13/04', '14/04', '15/04', '16/04'],
@@ -115,30 +113,10 @@ export const MuscleProgressionInfo = () => {
             value={timeRange}
             onValueChange={setTimeRange}
             buttons={[
-              { 
-                value: '7d',
-                label: 'Semanal',
-                style: styles.segmentButton,
-                labelStyle: styles.segmentButtonLabel,
-              },
-              { 
-                value: '30d',
-                label: 'Mensal',
-                style: styles.segmentButton,
-                labelStyle: styles.segmentButtonLabel,
-              },
-              { 
-                value: '90d',
-                label: 'Trimestral',
-                style: styles.segmentButton,
-                labelStyle: styles.segmentButtonLabel,
-              },
-              { 
-                value: 'total',
-                label: 'Total',
-                style: styles.segmentButton,
-                labelStyle: styles.segmentButtonLabel,
-              },
+              { value: '7d', label: '7 Dias', style: styles.segmentButton, labelStyle: styles.segmentButtonLabel },
+              { value: '30d', label: '30 Dias', style: styles.segmentButton, labelStyle: styles.segmentButtonLabel },
+              { value: '90d', label: '90 Dias', style: styles.segmentButton, labelStyle: styles.segmentButtonLabel },
+              { value: 'total', label: 'Total', style: styles.segmentButton, labelStyle: styles.segmentButtonLabel },
             ]}
             style={styles.segmentedButtons}
           />
@@ -154,16 +132,9 @@ export const MuscleProgressionInfo = () => {
               decimalPlaces: 0,
               color: (opacity = 1) => theme.colors.onSurface + opacity * 100,
               labelColor: () => theme.colors.onSurface,
-              style: {
-                borderRadius: 16,
-              },
-              propsForLabels: {
-                fontSize: 12,
-              },
-              propsForDots: {
-                r: '6',
-                strokeWidth: '2',
-              },
+              style: { borderRadius: 16 },
+              propsForLabels: { fontSize: 12 },
+              propsForDots: { r: '6', strokeWidth: '2' },
             }}
             bezier
             style={styles.chart}
@@ -176,74 +147,36 @@ export const MuscleProgressionInfo = () => {
             yAxisInterval={1}
           />
 
-          <List.Section>
-            <View style={styles.metricsContainer}>
-              <View style={styles.metricItem}>
-                <Tooltip title="Peso máximo levantado nos exercícios">
-                  <IconButton
-                    icon="weight-lifter"
-                    iconColor={MD3Colors.primary60}
-                    size={24}
-                  />
-                </Tooltip>
-                <View style={styles.metricContent}>
-                  <Text variant="labelMedium">Carga Máxima</Text>
-                  <Text variant="titleMedium">{getMetricsAverages().load}kg</Text>
-                </View>
-              </View>
-
-              <View style={styles.metricItem}>
-                <Tooltip title="Percepção de esforço durante treinos">
-                  <IconButton
-                    icon="lightning-bolt"
-                    iconColor={MD3Colors.error60}
-                    size={24}
-                  />
-                </Tooltip>
-                <View style={styles.metricContent}>
-                  <Text variant="labelMedium">Nível de Fadiga</Text>
-                  <Text variant="titleMedium">{getMetricsAverages().fatigue}%</Text>
-                </View>
-              </View>
-
-              <View style={styles.metricItem}>
-                <Tooltip title="Tempo de recuperação entre séries">
-                  <IconButton
-                    icon="heart-pulse"
-                    iconColor={MD3Colors.tertiary60}
-                    size={24}
-                  />
-                </Tooltip>
-                <View style={styles.metricContent}>
-                  <Text variant="labelMedium">Recuperação</Text>
-                  <Text variant="titleMedium">{getMetricsAverages().recovery}%</Text>
-                </View>
+          <View style={styles.metricsContainer}>
+            <View style={styles.metricItem}>
+              <Tooltip title="Média de peso levantado nos exercícios">
+                <IconButton icon="weight-lifter" iconColor={MD3Colors.primary60} size={24} />
+              </Tooltip>
+              <View style={styles.metricContent}>
+                <Text variant="labelMedium">Carga</Text>
+                <Text variant="titleMedium">{getMetricsAverages().load}kg</Text>
               </View>
             </View>
-          </List.Section>
 
-          <Divider bold={true} style={styles.divider} />
+            <View style={styles.metricItem}>
+              <Tooltip title="Percepção de esforço e fadiga durante treinos">
+                <IconButton icon="lightning-bolt" iconColor={MD3Colors.error60} size={24} />
+              </Tooltip>
+              <View style={styles.metricContent}>
+                <Text variant="labelMedium">Fadiga</Text>
+                <Text variant="titleMedium">{getMetricsAverages().fatigue}%</Text>
+              </View>
+            </View>
 
-          <View style={styles.bodyContainer}>
-            <Body
-              data={[
-                { slug: "chest", intensity: 1 },
-                { slug: "biceps", intensity: 2 },
-                { slug: "quadriceps", intensity: 1 },
-                { slug: "deltoids", intensity: 2 },
-              ]}
-              side="front"
-              border={theme.colors.outline}
-            />
-            <Body
-              data={[
-                { slug: "upper-back", intensity: 2 },
-                { slug: "hamstring", intensity: 1 },
-                { slug: "triceps", intensity: 1 },
-              ]}
-              side="back"
-              border={theme.colors.outline}
-            />
+            <View style={styles.metricItem}>
+              <Tooltip title="Fator médio de recuperação muscular entre séries">
+                <IconButton icon="heart-pulse" iconColor={MD3Colors.tertiary60} size={24} />
+              </Tooltip>
+              <View style={styles.metricContent}>
+                <Text variant="labelMedium">Recuperação</Text>
+                <Text variant="titleMedium">{getMetricsAverages().recovery}%</Text>
+              </View>
+            </View>
           </View>
         </Card.Content>
       </Card>
@@ -255,16 +188,6 @@ const styles = StyleSheet.create({
   chart: {
     borderRadius: 16,
     marginVertical: 16,
-  },
-  bodyContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-  },
-  divider: {
-    marginTop: 16,
-    marginVertical: 8,
   },
   sectionHeader: {
     padding: 16,
@@ -278,7 +201,6 @@ const styles = StyleSheet.create({
   },
   segmentButtonLabel: {
     fontSize: 12,
-    lineHeight: 14,
     textAlign: 'center',
   },
   metricsContainer: {
